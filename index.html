@@ -13,48 +13,50 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 <body>
+<main id="app">
     <h1>Záznamník úkolů</h1>
     <div class="container">
         
         <div id="formContainer"><h3>Přidat úkol</h3>
-            <form action="">                
+            <form @submit.prevent="addTask">                
                 <label for="taskName">Název</label><br>
-                <input type="text" id="taskName" name="ukol" required autofocus><br>
+                <input v-model="taskName" type="text" id="taskName" name="ukol" required autofocus><br>
                 <label for="taskType">Druh úkolu</label>
-                <select id="taskType" name="typ">
+                <select  id="taskType" v-model="taskType" name="typ" required>
                   <option value="programming">Programování</option>
                   <option value="meeting">Meeting</option>
                   <option value="personal">Osobní</option>
                   <option value="other">Jiné</option>
                 </select><br>
                 <p>Délka trvání</p>
-                <label for="taskName">od</label>
-                <input type="date" id="taskName" name="ukol" required>
-                <label for="taskName"></label>
-                <input type="time" id="taskName" name="ukol" required><br>
-                <label for="taskName">do</label>
-                <input type="date" id="taskName" name="ukol" required>
-                <label for="taskName"></label>
-                <input type="time" id="taskName" name="ukol" required><br>
-                <button>Uložit</button>
+                <label for="day"></label>
+                <input  type="date" id="day" v-model="day" name="datum" required>
+                <label for="fromTime">od</label>
+                <input type="time" id="fromTime" v-model="fromTime" name="od hod" required>              
+                <label for="toTime">do</label>
+                <input type="time" id="toTime" v-model="toTime" name="do hod" required><br>
+                <button type="submit">Uložit</button>
             </form>
         </div>
         <div id="listContainer">
-            <table id="taskTable">
+            <table   id="taskTable">
                 <thead><td>Název úkolu</td>
                     <td>Typ</td>
+                    <td>Datum</td>
                     <td>Začátek</td>
                     <td>Konec</td>
                 </thead>
-                <tr>
-                    <td>Udělat to-do aplikaci<span class="deleteBtn">&#x2612</span></td>
-                    <td>Programování</td>
-                    <td><span>12.6.2021</span><br><span>12:30</span></td>
-                    <td><span>12.7.2021</span><br><span>13:30</span></td>
+                <tr v-for="task of tasks">
+                    <td>{{task.text}}<span @click="removeTask(task)" class="deleteBtn">&#x2612</span></td>
+                    <td>{{task.type}}</td>
+                    <td>{{task.date}}</td>
+                    <td>{{task.fromT}}</td>
+                    <td>{{task.toT}}</td>
                 </tr>                
             </table>
         </div>
-    </div> 
+    </div>
+</main> 
     <script src="app.js"></script>
 </body>
 </html>
