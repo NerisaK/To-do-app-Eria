@@ -8,6 +8,7 @@ html {
     #f6f5f5 100%);
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
+    font-size: 16px;
     line-height: 1.5;
     color: #1f2a2e;
 }
@@ -24,7 +25,7 @@ html {
 }
 
 #formContainer {width: 70%;}
-#listContainer {width: 70%;}
+#listContainer {width: 70%; overflow-x:auto}
 
 h1 {
     font-family: 'Patrick Hand', cursive;
@@ -39,7 +40,7 @@ h3 {
     font-family: 'Patrick Hand', cursive;
     background-color: #cddfe4;
     border: 3px groove hsl(193, 30%, 90%);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: #19414d;
     margin: 0 0 1rem 0;
@@ -67,9 +68,12 @@ button {
     cursor: pointer;
 }
 
+button:hover {background-color: #3383999c; border: 3px solid #2d738680;}
+
 table {
-    text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
     border-collapse: collapse;
     width: 100%;
   }
@@ -79,7 +83,8 @@ td {
     padding: 8px;
   }
 
-td span:first-of-type {border-bottom: 1px solid grey;}
+td:nth-of-type(3) span:first-of-type,
+td:nth-of-type(4) span:first-of-type {border-bottom: 1px solid grey;}
   
 tr:nth-child(even){background-color: #deeaed71;}
   
@@ -87,12 +92,15 @@ thead {
     font-family: 'Patrick Hand', cursive;
     background-color: #cddfe4;
     border: 3px groove hsl(193, 30%, 90%);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: #19414d;
     margin: 0 0 1rem 0;
     padding: 0.5rem;
 }
+
+.deleteBtn {font-size: 1.3em; border-bottom: none; margin: 0 0.5em; cursor: pointer;}
+.deleteBtn:hover {color: #bf0303ea;}
 
 
 @media(min-width: 992px) {
@@ -104,6 +112,11 @@ thead {
 
     h1 {text-align: left; margin: 2rem 0 0.5rem 5rem;}
 
+    h3 {font-size: 1.5rem;}
+
     input:first-of-type {width: 80%;}
 
+    table {font-size: 1rem;}
+
+    thead {font-size: 1.5rem;}
 }
