@@ -1,0 +1,109 @@
+/* Colors: soft white #f6f5f5; light blue #cddfe4;
+darker teal #338399; almost black #1f2a2e; */
+
+html {
+    box-sizing: border-box;
+    background: #cddfe4;
+    background: linear-gradient(90deg, #cddfe4b0 0%,
+    #f6f5f5 100%);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #1f2a2e;
+}
+
+.container {display: flex; flex-direction: column;}
+
+#formContainer,
+#listContainer  {
+    background-color: #f6f5f5;
+    box-shadow: 6px 8px 13px -5px rgba(0,0,0,0.3);
+    border-radius: 0.2rem;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+#formContainer {width: 70%;}
+#listContainer {width: 70%;}
+
+h1 {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-align: center;
+    color: #19414d;
+    margin: 2rem 0 1rem 0;
+}
+
+h3 {
+    font-family: 'Patrick Hand', cursive;
+    background-color: #cddfe4;
+    border: 3px groove hsl(193, 30%, 90%);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #19414d;
+    margin: 0 0 1rem 0;
+    padding: 0.5rem;
+}
+
+label, form p {font-weight: 400;}
+
+input, select {    
+    border-radius: 4px;
+    border: 2px ridge hsl(193, 30%, 90%);
+    padding: 5px;
+    margin-bottom: 1.5em;
+}
+
+input:first-of-type {width: 55%;}
+
+button {
+    background-color: #338399;
+    border: 3px solid #2d7386;
+    border-radius: 0.3em;
+    margin-top: 1em;
+    padding: 0.2em 1.5em;
+    color: #f6f5f5;
+    cursor: pointer;
+}
+
+table {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+td span:first-of-type {border-bottom: 1px solid grey;}
+  
+tr:nth-child(even){background-color: #deeaed71;}
+  
+thead {
+    font-family: 'Patrick Hand', cursive;
+    background-color: #cddfe4;
+    border: 3px groove hsl(193, 30%, 90%);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #19414d;
+    margin: 0 0 1rem 0;
+    padding: 0.5rem;
+}
+
+
+@media(min-width: 992px) {
+
+    .container {flex-direction: row;}
+    
+    #formContainer {width: 30%;}
+    #listContainer {width: 50%;}
+
+    h1 {text-align: left; margin: 2rem 0 0.5rem 5rem;}
+
+    input:first-of-type {width: 80%;}
+
+}

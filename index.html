@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Záznamník úkolů</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <h1>Záznamník úkolů</h1>
+    <div class="container">
+        
+        <div id="formContainer"><h3>Přidat úkol</h3>
+            <form action="">                
+                <label for="taskName">Název</label><br>
+                <input type="text" id="taskName" name="ukol" required autofocus><br>
+                <label for="taskType">Druh úkolu</label>
+                <select id="taskType" name="typ">
+                  <option value="programming">Programování</option>
+                  <option value="meeting">Meeting</option>
+                  <option value="personal">Osobní</option>
+                  <option value="other">Jiné</option>
+                </select><br>
+                <p>Délka trvání</p>
+                <label for="taskName">od</label>
+                <input type="date" id="taskName" name="ukol" required>
+                <label for="taskName"></label>
+                <input type="time" id="taskName" name="ukol" required><br>
+                <label for="taskName">do</label>
+                <input type="date" id="taskName" name="ukol" required>
+                <label for="taskName"></label>
+                <input type="time" id="taskName" name="ukol" required><br>
+                <button>Uložit</button>
+            </form>
+        </div>
+        <div id="listContainer">
+            <table id="taskTable">
+                <thead><td>Název úkolu</td>
+                    <td>Typ</td>
+                    <td>Začátek</td>
+                    <td>Konec</td>
+                </thead>
+                <tr>
+                    <td>Udělat to-do aplikaci</td>
+                    <td>Programování</td>
+                    <td><span>12.6.2021</span><br><span>12:30</span></td>
+                    <td><span>12.7.2021</span><br><span>13:30</span></td>
+                </tr>                
+            </table>
+        </div>
+    </div> 
+    <script src="app.js"></script>
+</body>
+</html>
