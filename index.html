@@ -45,7 +45,7 @@
                     <td>Začátek</td>
                     <td>Konec</td>
                 </thead>
-                <tr v-for="task of tasks">
+                <tr v-for="task in sortedTasks">
                     <td>{{task.text}}<span @click="removeTask(task)" class="deleteBtn">&#x2612</span></td>
                     <td>{{task.type}}</td>
                     <td>{{task.date}}</td>

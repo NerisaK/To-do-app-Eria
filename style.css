@@ -101,6 +101,12 @@ thead {
     padding: 0.5rem;
 }
 
+.clickable {cursor: pointer;}
+
+.clickable:hover {
+    background-color: #accad2;
+}
+
 .deleteBtn {font-size: 1.3em; border-bottom: none; margin: 0 0.5em; cursor: pointer;}
 .deleteBtn:hover {color: #bf0303ea;}
 
