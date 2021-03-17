@@ -15,8 +15,7 @@
 <body>
 <main id="app">
     <h1>Záznamník úkolů</h1>
-    <div class="container">
-        
+    <div class="container">        
         <div id="formContainer"><h3>Přidat úkol</h3>
             <form @submit.prevent="addTask">                
                 <label for="taskName">Název</label><br>
@@ -40,9 +39,9 @@
         </div>
         <div id="listContainer">
             <table   id="taskTable">
-                <thead><td>Název úkolu</td>
-                    <td>Typ</td>
-                    <td>Datum</td>
+                <thead><td @click="sort('text')" class="clickable">Název úkolu</td>
+                    <td @click="sort('type')" class="clickable">Typ</td>
+                    <td @click="sort('date')" class="clickable">Datum</td>
                     <td>Začátek</td>
                     <td>Konec</td>
                 </thead>
@@ -54,6 +53,7 @@
                     <td>{{task.toT}}</td>
                 </tr>                
             </table>
+            <div></div>
         </div>
     </div>
 </main> 

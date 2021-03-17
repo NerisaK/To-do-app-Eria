@@ -2,7 +2,7 @@ const app = new Vue({
   el: "#app",
   data: {
     taskName: "",
-    taskType: "programming",
+    taskType: "",
     day: "",
     fromTime: "",
     toTime: "",
@@ -26,7 +26,7 @@ const app = new Vue({
         toT: this.toTime,
       });
     this.taskName = "";
-    this.taskType = "programming";
+    this.taskType = "";
     this.fromDay = "";
     this.fromTime = "";
     this.toDay = "";
