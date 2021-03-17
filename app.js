@@ -8,25 +8,13 @@ const app = new Vue({
     toTime: "",
     currentSort:'date',
     currentSortDir:'asc',
+    pageSize: 5,
+    currentPage: 1,    
     tasks:[
       {
         text: "První úkol (můžeš mě smazat)",
         type: "Jiné",
         date: "2021-03-16",
-        fromT: "12:20",
-        toT: "15:10",
-      },
-      {
-        text: "Druhý úkol",
-        type: "Jiné",
-        date: "2021-03-19",
-        fromT: "12:20",
-        toT: "15:10",
-      },
-      {
-        text: "Třetí úkol",
-        type: "Jiné",
-        date: "2021-03-17",
         fromT: "12:20",
         toT: "15:10",
       },      
@@ -57,7 +45,13 @@ const app = new Vue({
         this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
       }
       this.currentSort = s;
-    }
+    },
+    nextPage: function() {
+      if((this.currentPage*this.pageSize) < this.tasks.length) this.currentPage++;
+    },
+    prevPage: function() {
+      if(this.currentPage > 1) this.currentPage--;
+    },
   },
   computed: {
     sortedTasks: function() {
@@ -67,7 +61,12 @@ const app = new Vue({
         if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
         if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
         return 0;
+      }).filter((row, index) => {
+        let start = (this.currentPage-1)*this.pageSize;
+        let end = this.currentPage*this.pageSize;
+        if(index >= start && index < end) return true;
       });
-    }
-  }
+    },
+    lastPage: function() {return Math.ceil(this.tasks.length/ 5)},
+  },
 });

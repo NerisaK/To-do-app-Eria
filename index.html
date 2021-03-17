@@ -27,7 +27,7 @@
                   <option value="personal">Osobní</option>
                   <option value="other">Jiné</option>
                 </select><br>
-                <p>Délka trvání</p>
+                <p>Datum a čas</p>
                 <label for="day"></label>
                 <input  type="date" id="day" v-model="day" name="datum" required>
                 <label for="fromTime">od</label>
@@ -39,9 +39,13 @@
         </div>
         <div id="listContainer">
             <table   id="taskTable">
-                <thead><td @click="sort('text')" class="clickable">Název úkolu</td>
-                    <td @click="sort('type')" class="clickable">Typ</td>
-                    <td @click="sort('date')" class="clickable">Datum</td>
+                <thead>
+                    <td @click="sort('text')" class="clickable"
+                    :class="{ 'active' : currentSort === 'text'}">Název úkolu</td>
+                    <td @click="sort('type')" class="clickable"
+                    :class="{ 'active' : currentSort === 'type'}">Typ</td>
+                    <td @click="sort('date')" class="clickable"
+                    :class="{ 'active' : currentSort === 'date'}">Datum</td>
                     <td>Začátek</td>
                     <td>Konec</td>
                 </thead>
@@ -53,7 +57,10 @@
                     <td>{{task.toT}}</td>
                 </tr>                
             </table>
-            <div></div>
+            
+            <div id="navButtons"><p>
+                <button v-if="currentPage !== 1" @click="prevPage">předchozí strana</button>
+                <button v-if="currentPage !== lastPage" @click="nextPage">další strana</button></p><span id="pagination">strana {{ currentPage }}</span>
         </div>
     </div>
 </main> 
