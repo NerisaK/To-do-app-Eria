@@ -13,19 +13,27 @@ const app = new Vue({
     tasks:[],
   },
   mounted() {
-    fetch('https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/get-api?secret=gettask')
-    .then(res => res.json())
-    .then(res => {this.tasks = res;})  
+    this.showData();
   },
   methods: {
-    addTask() {
-      this.tasks.push({
-        text: this.taskName,
-        type: this.taskType,
-        date: this.day,
-        fromT: this.fromTime,
-        toT: this.toTime,
-      });
+    showData(){
+      fetch('https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/get-api?secret=gettask')
+      .then(res => res.json())
+      .then(res => {this.tasks = res;})},
+    async addTask() {
+      const data = `{\"text\": \"${this.taskName}\", \"type\": \"${this.taskType}\", \"date\": \"${this.day}\", \"fromT\": \"${this.fromTime}\", \"toT\": \"${this.toTime}\"}`;
+      console.log(data);
+      const requestOptions = {
+        method: 'POST',
+        body: data,
+        redirect: 'follow'
+      };      
+      await fetch("https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/post-api2?secret=postapi", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error)
+      );
+      this.showData();          
       this.taskName = "";
       this.taskType = "";
       this.day = "";
@@ -67,3 +75,8 @@ const app = new Vue({
     lastPage: function() {return Math.ceil(this.tasks.length/ 5)},
   },
 });
+
+// text: "Úkol", type: "typ", date: "datum", fromT: "čas1", toT: "čas2"
+// exports({text: this.taskName, type: this.taskType, date: this.day, fromT: this.fromTime, toT: this.toTime}, "create")
+// getapi: https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/get-api?secret=gettask
+// postapi: https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/post-api?secret:posttasks
