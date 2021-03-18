@@ -10,15 +10,12 @@ const app = new Vue({
     currentSortDir:'asc',
     pageSize: 5,
     currentPage: 1,    
-    tasks:[
-      {
-        text: "První úkol (můžeš mě smazat)",
-        type: "Jiné",
-        date: "2021-03-16",
-        fromT: "12:20",
-        toT: "15:10",
-      },      
-    ],
+    tasks:[],
+  },
+  mounted() {
+    fetch('https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/get-api?secret=gettask')
+    .then(res => res.json())
+    .then(res => {this.tasks = res;})  
   },
   methods: {
     addTask() {
