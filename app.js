@@ -1,85 +1,109 @@
 const app = new Vue({
   el: "#app",
   data: {
+    newTaskID: "",
     taskName: "",
     taskType: "",
     day: "",
     fromTime: "",
     toTime: "",
-    currentID: "",
+    tasks:[],
     currentSort:'date',
-    currentSortDir:'asc',
+    currentSortDirection:'asc',
     pageSize: 5,
     currentPage: 1,
-    tasks:[],
   },
   mounted() {
-    this.showData();
+    this.loadTasks();
+  },
+  watch: {
+    tasks: function() {
+      this.setNewID();
+      this.loadTasks();
+    },
   },
   methods: {
-    async showData(){
-      await fetch('https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/get-api?secret=gettask')
+    async loadTasks(){
+      await fetch('https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/get-api?secret=gettask', {
+        method: 'GET',
+      })
       .then(res => res.json())
       .then(res => {this.tasks = res})
+      .catch(error => console.log('error', error)
+    )},
+    highestTaskID (){
+      let maxID = 0;          
+        for (let i = 0; i < this.tasks.length; i++){
+          let thisID = parseInt(this.tasks[i].id);
+          if (thisID > maxID) {maxID = thisID}
+        }
+      return maxID;
     },
-    findHighestID() {
-      if(this.tasks.length !== 0){
-      let max = parseInt(this.tasks[0].id);          
-      for (let i = 1; i < this.tasks.length; i++){
-        let value = parseInt(this.tasks[i].id);
-        if (value > max) {max = value}
+    setNewID() {
+      if(this.tasks.length !== 0){        
+        this.newTaskID = this.highestTaskID() + 1;
       }
-      this.currentID = max + 1;
-    }
-    else {this.currentID = 0;}
+      else {this.newTaskID = 0;}
     },
-    async addTask() {
-      this.findHighestID();      
-      const data = `{\"id\": \"${this.currentID}\", \"text\": \"${this.taskName}\", \"type\": \"${this.taskType}\", \"date\": \"${this.day}\", \"fromT\": \"${this.fromTime}\", \"toT\": \"${this.toTime}\"}`;      
-      await fetch("https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/post-api2?secret=postapi", {method: 'POST', body: data})
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error)
-      );
-      this.showData();          
-      this.findHighestID();
+    inputToString(){
+      const newTask = `{
+        \"id\": \"${this.newTaskID}\", 
+        \"text\": \"${this.taskName}\", 
+        \"type\": \"${this.taskType}\", 
+        \"date\": \"${this.day}\", 
+        \"fromT\": \"${this.fromTime}\", 
+        \"toT\": \"${this.toTime}\"}`;
+      return newTask;
+    },    
+    clearForm(){
       this.taskName = "";
       this.taskType = "";
       this.day = "";
       this.fromTime = "";
       this.toTime = "";
     },
+    async addTask() {      
+      await fetch("https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/post-api?secret=posttask", {
+        method: 'POST', body: this.inputToString(),
+      })
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .then(this.clearForm())
+        .catch(error => console.log('error', error)
+      );      
+    },
     async removeTask(task){
       const taskID = parseInt(task.id);
-      const str = "https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/dbapi?secret=156hu5&command=delete&id=" + taskID;
+      const url = "https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-application-kovqq/service/tasksapi/incoming_webhook/delete-api?secret=deletetask&command=delete&id=";
       if(taskID !== NaN){
-        await fetch(str)
+        await fetch(url + taskID)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error)
       )};
-      this.showData();          
-      this.findHighestID();
     },
-    sort(s) {
-      //if s == current sort, reverse
-      if(s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+    sortTable(sortType) {
+      if(sortType === this.currentSort) {
+        this.currentSortDirection = this.currentSortDirection==='asc'?'desc':'asc';
       }
-      this.currentSort = s;
+      this.currentSort = sortType;
     },
     nextPage: function() {
-      if((this.currentPage*this.pageSize) < this.tasks.length) this.currentPage++;
+      if((this.currentPage*this.pageSize) < this.tasks.length){
+        this.currentPage++;
+      };        
     },
     prevPage: function() {
-      if(this.currentPage > 1) this.currentPage--;
+      if(this.currentPage > 1){
+        this.currentPage--;
+      };        
     },
   },
   computed: {
     sortedTasks: function() {
       return this.tasks.sort((a,b) => {
         let modifier = 1;
-        if(this.currentSortDir === 'desc') modifier = -1;
+        if(this.currentSortDirection === 'desc') modifier = -1;
         if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
         if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
         return 0;
@@ -90,8 +114,12 @@ const app = new Vue({
       });
     },
     lastPage: function() {
-      if (this.tasks.length % 5 !== 0){return Math.ceil(this.tasks.length/ 5) + 1}
-      else {return Math.ceil(this.tasks.length/ 5)};
+      if (this.tasks.length % this.pageSize !== 0){
+        return Math.ceil(this.tasks.length / this.pageSize);
+      }
+      else {
+        return this.tasks.length / this.pageSize
+      };
     },
   },
 });

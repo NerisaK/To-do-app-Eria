@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,65 +8,75 @@
     <title>Záznamník úkolů</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/realm-web@1.2.0/dist/bundle.iife.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 </head>
+
 <body>
-<main id="app">
-    <h1>Záznamník úkolů</h1>
-    <div class="container">        
-        <div id="formContainer"><h3>Přidat úkol</h3>
-            <form @submit.prevent="addTask">                
-                <label for="taskName">Název</label><br>
-                <input v-model="taskName" type="text" id="taskName" name="ukol" required autofocus><br>
-                <label for="taskType">Druh úkolu</label>
-                <select  id="taskType" v-model="taskType" name="typ" required>
-                  <option value="Programování">Programování</option>
-                  <option value="Pracovní">Pracovní</option>
-                  <option value="Meeting">Meeting</option>
-                  <option value="Osobní">Osobní</option>
-                  <option value="Jiné">Jiné</option>
-                </select><br>
-                <p>Datum a čas</p>
-                <label for="day"></label>
-                <input  type="date" id="day" v-model="day" name="datum" required>
-                <label for="fromTime">od</label>
-                <input type="time" id="fromTime" v-model="fromTime" name="od hod" required>              
-                <label for="toTime">do</label>
-                <input type="time" id="toTime" v-model="toTime" name="do hod" required><br>
-                <button type="submit">Uložit</button>
-            </form>
-        </div>
-        <div id="listContainer">
-            <table   id="taskTable">
-                <thead>
-                    <td @click="sort('text')" class="clickable"
-                    :class="{ 'active' : currentSort === 'text'}">Název úkolu</td>
-                    <td @click="sort('type')" class="clickable"
-                    :class="{ 'active' : currentSort === 'type'}">Typ</td>
-                    <td @click="sort('date')" class="clickable"
-                    :class="{ 'active' : currentSort === 'date'}">Datum</td>
-                    <td>Začátek</td>
-                    <td>Konec</td>
-                </thead>
-                <tr v-for="task in sortedTasks">
-                    <td>{{task.text}}<span @click="removeTask(task)" class="deleteBtn">&#x2612</span></td>
-                    <td>{{task.type}}</td>
-                    <td>{{task.date}}</td>
-                    <td>{{task.fromT}}</td>
-                    <td>{{task.toT}}</td>
-                </tr>                
-            </table>
-            
-            <div id="navButtons"><p>
-                <button v-if="currentPage !== 1" @click="prevPage">předchozí strana</button>
-                <button v-if="currentPage !== lastPage" @click="nextPage">další strana</button></p><span id="pagination">strana {{ currentPage }}</span>
-        </div>
-    </div>
-</main> 
+    <main id="app">
+        <h1>Záznamník úkolů</h1>
+        <div class="container">
+            <div id="formContainer">
+                <h3>Přidat úkol</h3>
+                <form @submit.prevent="addTask">
+                    <label for="taskName">Název</label><br>
+                    <input v-model="taskName" type="text" id="taskName" name="ukol" required autofocus><br>
+                    <label for="taskType">Druh úkolu</label>
+                    <select id="taskType" v-model="taskType" name="typ" required>
+                        <option value="Programování">Programování</option>
+                        <option value="Pracovní">Pracovní</option>
+                        <option value="Meeting">Meeting</option>
+                        <option value="Osobní">Osobní</option>
+                        <option value="Jiné">Jiné</option>
+                    </select><br>
+                    <p>Datum a čas</p>
+                    <label for="day"></label>
+                    <input type="date" id="day" v-model="day" name="datum" required>
+                    <label for="fromTime">od</label>
+                    <input type="time" id="fromTime" v-model="fromTime" name="od hod" required>
+                    <label for="toTime">do</label>
+                    <input type="time" id="toTime" v-model="toTime" name="do hod" required><br>
+                    <button type="submit">Uložit</button>
+                </form>
+            </div>
+            <div id="listContainer">
+                <table id="taskTable">
+                    <thead>
+                        <td @click="sortTable('text')"class="clickable"
+                        :class="{ 'active' : currentSort === 'text'}">Název úkolu
+                        </td>
+                        <td @click="sortTable('type')" class="clickable"
+                        :class="{ 'active' : currentSort === 'type'}">Typ 
+                        </td>
+                        <td @click="sortTable('date')" class="clickable"
+                        :class="{ 'active' : currentSort === 'date'}">Datum
+                        </td>
+                        <td>Začátek</td>
+                        <td>Konec</td>
+                    </thead>
+                    <tr v-for="task in sortedTasks">
+                        <td>{{task.text}}<span @click="removeTask(task)"
+                            class="deleteBtn">&#x2612</span>
+                        </td>
+                        <td>{{task.type}}</td>
+                        <td>{{task.date}}</td>
+                        <td>{{task.fromT}}</td>
+                        <td>{{task.toT}}</td>
+                    </tr>
+                </table>
+
+                <div id="navButtonsRow">
+                    <p>
+                        <button v-if="currentPage !== 1" @click="prevPage">
+                            předchozí strana</button>
+                        <button v-if="currentPage !== lastPage" @click="nextPage">
+                            další strana</button>
+                    </p><span id="pagination">strana {{ currentPage }}</span>
+                </div>
+            </div>
+    </main>
     <script src="app.js"></script>
 </body>
+
 </html>

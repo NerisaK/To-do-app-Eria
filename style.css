@@ -1,135 +1,161 @@
-/* Colors: soft white #f6f5f5; light blue #cddfe4;
-darker teal #338399; almost black #1f2a2e; */
+/* ** Main colors: **
+soft white = hsl(0, 5%, 96%);
+light blue hsl(193, 30%, 85%);
+dark teal = hsl(194, 51%, 20%);
+almost black = hsl(196, 19%, 15%);
+*/
 
 html {
+    background: hsl(193, 30%, 85%);
+    background: linear-gradient(90deg, hsla(193, 30%, 85%, 0.69) 0%,
+    hsl(0, 5%, 96%) 100%);
     box-sizing: border-box;
-    background: #cddfe4;
-    background: linear-gradient(90deg, #cddfe4b0 0%,
-    #f6f5f5 100%);
+    line-height: 1.5;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 16px;
-    line-height: 1.5;
-    color: #1f2a2e;
+    color: hsl(196, 19%, 15%);
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: hsl(194, 51%, 20%);
+    margin: 2rem 0 1rem 0;
+}
+
+h3 {
+    background-color: hsl(193, 30%, 85%);
+    border: 3px groove hsl(193, 30%, 90%);
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: hsl(194, 51%, 20%);
+    margin: 0 0 1rem 0;
+    padding: 0.5rem;
 }
 
 .container {display: flex; flex-direction: column;}
 
 #formContainer,
 #listContainer  {
-    background-color: #f6f5f5;
-    box-shadow: 6px 8px 13px -5px rgba(0,0,0,0.3);
+    box-shadow: 6px 8px 13px -5px hsla(0, 0%, 0%, 0.3);
+    background-color: hsl(0, 5%, 96%);
     border-radius: 0.2rem;
     margin: 2rem auto;
 }
 
 #formContainer {width: 80%; padding: 2rem;}
-#listContainer {width: 90%; overflow-x:auto; padding: 0.5rem;}
 
-h1 {
-    font-family: 'Patrick Hand', cursive;
-    font-size: 2.5rem;
-    font-weight: 400;
-    text-align: center;
-    color: #19414d;
-    margin: 2rem 0 1rem 0;
-}
-
-h3 {
-    font-family: 'Patrick Hand', cursive;
-    background-color: #cddfe4;
-    border: 3px groove hsl(193, 30%, 90%);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: #19414d;
-    margin: 0 0 1rem 0;
+#listContainer {
+    overflow-x:auto;
+    width: 90%;
     padding: 0.5rem;
 }
+
+
+/* Form styling */
 
 label, form p {font-weight: 400;}
 
 input {margin-right: 1em;}
 
 input, select {    
-    border-radius: 4px;
     border: 2px ridge hsl(193, 30%, 90%);
-    padding: 5px;
+    border-radius: 4px;
     margin-bottom: 1.5em;
+    padding: 5px;
 }
 
 input:first-of-type {width: 55%;}
 
-button {
-    background-color: #338399;
-    border: 3px solid #2d7386;
-    border-radius: 0.3em;
-    margin-top: 1em;
-    padding: 0.2em 1.5em;
-    color: #f6f5f5;
-    cursor: pointer;
-}
 
-button:hover {background-color: #3383999c; border: 3px solid #2d738680;}
+/* Tasks list/table styling */
 
 table {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.9rem;
-    text-align: center;
     border-collapse: collapse;
     width: 100%;
-  }
-  
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-td:nth-of-type(3) span:first-of-type,
-td:nth-of-type(4) span:first-of-type {border-bottom: 1px solid grey;}
-  
-tr:nth-child(even){background-color: #deeaed71;}
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+}
   
 thead {
-    font-family: 'Patrick Hand', cursive;
-    background-color: #cddfe4;
     border: 3px groove hsl(193, 30%, 90%);
+    background-color: hsl(193, 30%, 85%);
+    font-family: 'Patrick Hand', cursive;
     font-size: 1.2rem;
     font-weight: 400;
-    color: #19414d;
+    color: hsl(194, 51%, 20%);
     margin: 0 0 1rem 0;
     padding: 0.5rem;
 }
 
 .clickable {cursor: pointer;}
-
 .clickable:hover, .active {
-    background-color: #accad2;
+    background-color: hsl(193, 30%, 75%);
 }
 
-.deleteBtn {font-size: 1.3em; border-bottom: none; margin: 0 0.5em; cursor: pointer;}
-.deleteBtn:hover {color: #bf0303ea;}
+tr:nth-child(even){background-color: hsla(192, 29%, 90%, 0.443);}
 
-#navButtons {
+td {
+    border: 1px solid hsl(0, 0%, 87%);
+    padding: 8px;
+}
+
+td:nth-of-type(3) span:first-of-type,
+td:nth-of-type(4) span:first-of-type {
+    border-bottom: 1px solid hsl(0, 0%, 50%);
+}
+
+/* Buttons */
+
+button {
+    background-color: hsl(193, 50%, 40%);
+    border: 3px solid hsl(193, 50%, 35%);
+    border-radius: 0.3em;
+    margin-top: 1em;
+    padding: 0.2em 1.5em;
+    color: hsl(0, 5%, 96%);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: hsla(193, 50%, 40%, 0.612);
+    border: 3px solid hsla(193, 50%, 35%, 0.502);
+}
+
+.deleteBtn {
+    font-size: 1.3em;
+    border-bottom: none;
+    margin: 0 0.5em;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {color: hsla(0, 97%, 38%, 0.918);}
+
+#navButtonsRow {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin: 5px 0;
 }
 
+
 @media(min-width: 992px) {
+
+    h1 {text-align: left; margin: 2rem 0 0.5rem 5rem;}
+    h3 {font-size: 1.5rem;}
 
     .container {flex-direction: row;}
     
     #formContainer {width: 30%; padding: 2rem;}
     #listContainer {width: 50%; padding: 2rem;}
 
-    h1 {text-align: left; margin: 2rem 0 0.5rem 5rem;}
-
-    h3 {font-size: 1.5rem;}
-
     input:first-of-type {width: 80%;}
 
-    table {font-size: 1rem;}
-
     thead {font-size: 1.5rem;}
+    table {font-size: 1rem;}
 }
