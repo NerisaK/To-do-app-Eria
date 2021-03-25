@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Záznamník úkolů</title>
+    <title>To-do app</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
@@ -15,45 +15,45 @@
 
 <body>
     <main id="app">
-        <h1>Záznamník úkolů</h1>
+        <h1>To-do app</h1>
         <div class="container">
             <div id="formContainer">
-                <h3>Přidat úkol</h3>
+                <h3>Add task</h3>
                 <form @submit.prevent="addTask">
-                    <label for="taskName">Název</label><br>
+                    <label for="taskName">Name</label><br>
                     <input v-model="taskName" type="text" id="taskName" name="ukol" required autofocus><br>
-                    <label for="taskType">Druh úkolu</label>
+                    <label for="taskType">Task type</label>
                     <select id="taskType" v-model="taskType" name="typ" required>
-                        <option value="Programování">Programování</option>
-                        <option value="Pracovní">Pracovní</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Work">Work</option>
                         <option value="Meeting">Meeting</option>
-                        <option value="Osobní">Osobní</option>
-                        <option value="Jiné">Jiné</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Other">Other</option>
                     </select><br>
-                    <p>Datum a čas</p>
+                    <p>Date and time</p>
                     <label for="day"></label>
                     <input type="date" id="day" v-model="day" name="datum" required>
-                    <label for="fromTime">od</label>
+                    <label for="fromTime">from</label>
                     <input type="time" id="fromTime" v-model="fromTime" name="od hod" required>
-                    <label for="toTime">do</label>
+                    <label for="toTime">to</label>
                     <input type="time" id="toTime" v-model="toTime" name="do hod" required><br>
-                    <button type="submit">Uložit</button>
+                    <button type="submit">Save</button>
                 </form>
             </div>
             <div id="listContainer">
                 <table id="taskTable">
                     <thead>
                         <td @click="sortTable('text')"class="clickable"
-                        :class="{ 'active' : currentSort === 'text'}">Název úkolu
+                        :class="{ 'active' : currentSort === 'text'}">Taks name
                         </td>
                         <td @click="sortTable('type')" class="clickable"
-                        :class="{ 'active' : currentSort === 'type'}">Typ 
+                        :class="{ 'active' : currentSort === 'type'}">Type 
                         </td>
                         <td @click="sortTable('date')" class="clickable"
-                        :class="{ 'active' : currentSort === 'date'}">Datum
+                        :class="{ 'active' : currentSort === 'date'}">Date
                         </td>
-                        <td>Začátek</td>
-                        <td>Konec</td>
+                        <td>Start</td>
+                        <td>End</td>
                     </thead>
                     <tr v-for="task in sortedTasks">
                         <td>{{task.text}}<span @click="removeTask(task)"
@@ -69,10 +69,10 @@
                 <div id="navButtonsRow">
                     <p>
                         <button v-if="currentPage !== 1" @click="prevPage">
-                            předchozí strana</button>
+                            previous page</button>
                         <button v-if="currentPage !== lastPage" @click="nextPage">
-                            další strana</button>
-                    </p><span id="pagination">strana {{ currentPage }}</span>
+                            next page</button>
+                    </p><span id="pagination">page {{ currentPage }}</span>
                 </div>
             </div>
     </main>
