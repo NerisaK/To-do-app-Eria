@@ -1,0 +1,66 @@
+All mongoDB webhook functions. The name of the database is "data", collection's name's "tasks". You should use your own of course.
+
+"get-api" webhook, HTTP method: GET
+
+Code:
+
+exports = function(payload) {
+   const mongodb = context.services.get("mongodb-atlas");
+   const mycollection = mongodb.db("data").collection("tasks");
+   return mycollection.find({}).toArray();
+};
+
+
+"post-api" webhook, HTTP method: POST
+
+Code:
+
+exports = async function(payload, response) {
+  // Convert the webhook body from BSON to an EJSON object
+  const body = EJSON.parse(payload.body.text());
+  // Execute application logic, such as working with MongoDB
+  if(body) {
+    const mdb = context.services.get('mongodb-atlas');
+    const requests = mdb.db("data").collection("tasks")
+    const { insertedId } = await requests.insertOne({ id: body.id, text: body.text, type: body.type, date: body.date, fromT: body.fromT, toT: body.toT });
+    // Respond with an affirmative result
+    response.setStatusCode(200)
+    response.setBody(`Successfully saved object.`);
+  } else {
+    // Respond with a malformed request error
+    response.setStatusCode(400)
+    response.setBody(`Could not find object in the webhook request body.`);
+  }
+
+  return { msg: "finished!" };
+}
+
+"delete-api" webhook, HTTP method: DELETE
+
+Code:
+
+exports = async function(payload) {
+   const mongodb = context.services.get("mongodb-atlas");
+   const db = mongodb.db("data");
+   const tasks = db.collection("tasks");
+   const cmd = payload.query.command;
+   const doc = payload.query.doc;
+   const id = payload.query.id;
+   
+   switch(cmd) {
+   case "create":
+      const result= await tasks.insertOne(doc);
+      if(result) {
+            return { text: `Task added` };
+      }
+      return { text: `Error stashing` };
+      
+   case "delete":
+      const delresult = await tasks.deleteOne({id: payload.query.id});
+      if(delresult.deletedCount !== 0){
+      return { text: `Deleted ${delresult.deletedCount} object with id ${payload.query.id}` };}
+      else {return {text: "Couldn't delete the object."}} break;
+   default:
+      return { text: "Unrecognized command." };
+   }
+}
