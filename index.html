@@ -44,7 +44,7 @@
                 <table id="taskTable">
                     <thead>
                         <td @click="sortTable('text')"class="clickable"
-                        :class="{ 'active' : currentSort === 'text'}">Taks name
+                        :class="{ 'active' : currentSort === 'text'}">Task name
                         </td>
                         <td @click="sortTable('type')" class="clickable"
                         :class="{ 'active' : currentSort === 'type'}">Type 
@@ -73,8 +73,8 @@
                         <button v-if="currentPage !== lastPage" @click="nextPage">
                             next page</button>
                     </p><span id="pagination">page {{ currentPage }}</span>
-                </div>
-            </div>
+                </div><p>To see working version (without database) please visit <a href="https://to-do-app-vue-no-mongo.vercel.app/">this page</a>.</p>
+            </div>            
     </main>
     <script src="app.js"></script>
 </body>

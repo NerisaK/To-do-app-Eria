@@ -37,6 +37,8 @@ h3 {
     padding: 0.5rem;
 }
 
+a {text-decoration: none; color: hsl(194, 51%, 20%); font-weight: bold;}
+
 .container {display: flex; flex-direction: column;}
 
 #formContainer,
